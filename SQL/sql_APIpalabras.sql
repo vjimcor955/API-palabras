@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `API-palabras`.`Jugador` (
   INDEX `fk_Jugador_Equipo1_idx` (`Equipo_id` ASC) VISIBLE,
   CONSTRAINT `fk_Jugador_Equipo1`
     FOREIGN KEY (`Equipo_id`)
-    REFERENCES `API-palabras`.`Equipo` (`id`)
+    REFERENCES `API-palabras`.equipo (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -77,12 +77,12 @@ CREATE TABLE IF NOT EXISTS `API-palabras`.`Partida` (
   INDEX `fk_Partida_Juego1_idx` (`Juego_id` ASC) VISIBLE,
   CONSTRAINT `fk_Partida_Jugador1`
     FOREIGN KEY (`Jugador_id` , `Jugador_Equipo_id`)
-    REFERENCES `API-palabras`.`Jugador` (`id` , `Equipo_id`)
+    REFERENCES `API-palabras`.jugador (`id` , `Equipo_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Partida_Juego1`
     FOREIGN KEY (`Juego_id`)
-    REFERENCES `API-palabras`.`Juego` (`id`)
+    REFERENCES `API-palabras`.juego (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -110,12 +110,12 @@ CREATE TABLE IF NOT EXISTS `API-palabras`.`Juego_has_Palabra` (
   INDEX `fk_Juego_has_Palabra_Juego_idx` (`Juego_id` ASC) VISIBLE,
   CONSTRAINT `fk_Juego_has_Palabra_Juego`
     FOREIGN KEY (`Juego_id`)
-    REFERENCES `API-palabras`.`Juego` (`id`)
+    REFERENCES `API-palabras`.juego (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Juego_has_Palabra_Palabra1`
     FOREIGN KEY (`Palabra_id`)
-    REFERENCES `API-palabras`.`Palabra` (`id`)
+    REFERENCES `API-palabras`.palabra (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
