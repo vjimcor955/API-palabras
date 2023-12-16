@@ -49,8 +49,8 @@ public class ControladorEquipo {
     @DeleteMapping("/equipo/{id}")
     public ResponseEntity<?> deleteEquipo(@PathVariable Long id) {
         return equipoRepositorio.findById(id)
-                .map(producto -> {
-                    equipoRepositorio.delete(producto);
+                .map(equipo -> {
+                    equipoRepositorio.delete(equipo);
                     return ResponseEntity.ok().build();
                 })
                 .orElseThrow(() -> new EquipoNotFound(id));
