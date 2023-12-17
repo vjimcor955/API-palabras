@@ -20,6 +20,11 @@ public class ControladorPalabras {
         this.palabrasRepositorio = palabrasRepositorio;
     }
 
+    /**
+     * @param page Numero de pagina
+     * @param size Tamaño de la pagina
+     * @return Todas las palabras paginadas
+     */
     @GetMapping("/palabras")
     public Page<Palabra> getAllPalabras(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "10") int size) {
@@ -28,6 +33,10 @@ public class ControladorPalabras {
         return ResponseEntity.status(HttpStatus.OK).body(palabraPage).getBody();
     }
 
+    /**
+     * @param size Cantidad de palabras.
+     * @return Cantidad de palabras aleatorias especificada.
+     */
     @GetMapping("/palabra/random/{size}")
     public List<Optional<Palabra>> getPalabrasRandom(@PathVariable int size) {
         var servicioPalabras = new ServicioPalabras(palabrasRepositorio);
@@ -35,6 +44,9 @@ public class ControladorPalabras {
         return ResponseEntity.status(HttpStatus.OK).body(palabrasRandom).getBody();
     }
 
+    /**
+     * @return Todos los prefijos y sufijos
+     */
     @GetMapping("/palabras/cadenas")
     public Map<String, List<String>> getCadenas() {
         var servicioPalabras = new ServicioPalabras(palabrasRepositorio);
@@ -46,6 +58,10 @@ public class ControladorPalabras {
         return ResponseEntity.status(HttpStatus.OK).body(cadenas).getBody();
     }
 
+    /**
+     * @param string Cadena
+     * @return Palabras que contengan la cadena especificada
+     */
     @GetMapping("/palabras/{string}")
     public Map<String, List<Palabra>> getPalabrasString(@PathVariable String string) {
         List<Palabra> allPalabras = palabrasRepositorio.findAll();

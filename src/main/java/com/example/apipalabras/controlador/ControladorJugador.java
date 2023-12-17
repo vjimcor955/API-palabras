@@ -19,17 +19,29 @@ public class ControladorJugador {
         this.jugadorRepositorio = jugadorRepositorio;
     }
 
+    /**
+     * @return Todos los jugadores
+     */
     @GetMapping("/jugadores")
     public List<Jugador> getAllJugadores() {
         List<Jugador> allJugadores = jugadorRepositorio.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(allJugadores).getBody();
     }
 
+    /**
+     * @param jugador json con los datos del jugador a insertar
+     * @return Inserta el jugador
+     */
     @PostMapping("/jugador")
     public ResponseEntity<Jugador> postEquipo(@Valid @RequestBody Jugador jugador) {
         return ResponseEntity.status(HttpStatus.CREATED).body(jugadorRepositorio.save(jugador));
     }
 
+    /**
+     * @param id Id del equipo a modificar
+     * @param jugador json con los datos del jugador a modificar
+     * @return Modifica el equipo
+     */
     @PutMapping("/jugador/{id}")
     public Jugador updateEquipo(@PathVariable Long id, @Valid @RequestBody Jugador jugador) {
         return jugadorRepositorio.findById(id)
@@ -44,6 +56,10 @@ public class ControladorJugador {
                 .orElseThrow(() ->  new JugadorNotFound(id));
     }
 
+    /**
+     * @param id Id del equipo a eliminar
+     * @return Elimina el equipo
+     */
     @DeleteMapping("/jugador/{id}")
     public ResponseEntity<?> deleteEquipo(@PathVariable Long id) {
         return jugadorRepositorio.findById(id)

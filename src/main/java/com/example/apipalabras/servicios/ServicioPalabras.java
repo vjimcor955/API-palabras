@@ -13,6 +13,10 @@ public class ServicioPalabras {
         this.palabrasRepositorio = palabrasRepositorio;
     }
 
+    /**
+     * @param size Numero de palabras
+     * @return Lista con el número de palabras aleatorias especificado
+     */
     public List<Optional<Palabra>> palabrasRandom(int size) {
         var random = new Random();
         List<Palabra> allPalabras = palabrasRepositorio.findAll();
@@ -24,33 +28,41 @@ public class ServicioPalabras {
         return palabrasRandom;
     }
 
+    /**
+     * @param path Archivo que contiene los prefijos
+     * @return Lista con todos los prefijos
+     */
     public List<String> prefijosToList(String path) {
-        List<String> valuesList = new ArrayList<>();
+        List<String> listaPrefijos = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new File(path));
             while (scanner.hasNext()) {
                 String value = scanner.next();
-                valuesList.add(value.substring(0, value.length() - 1));
+                listaPrefijos.add(value.substring(0, value.length() - 1));
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return valuesList;
+        return listaPrefijos;
     }
 
+    /**
+     * @param path Archivo que contiene los sufijos
+     * @return Lista con todos los sufijos
+     */
     public List<String> sufijosToList(String path) {
-        List<String> valuesList = new ArrayList<>();
+        List<String> listaSufijos = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new File(path));
             while (scanner.hasNext()) {
                 String value = scanner.next();
-                valuesList.add(value.substring(1));
+                listaSufijos.add(value.substring(1));
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return valuesList;
+        return listaSufijos;
     }
 }

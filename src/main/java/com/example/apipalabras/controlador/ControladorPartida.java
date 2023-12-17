@@ -1,19 +1,12 @@
 package com.example.apipalabras.controlador;
 
-import com.example.apipalabras.error.EquipoNotFound;
 import com.example.apipalabras.error.PartidaNotFound;
-import com.example.apipalabras.modelos.Equipo;
 import com.example.apipalabras.modelos.Partida;
-import com.example.apipalabras.repos.EquipoRepositorio;
 import com.example.apipalabras.repos.PartidaRepositorio;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -26,19 +19,29 @@ public class ControladorPartida {
         this.partidaRepositorio = partidaRepositorio;
     }
 
-    // TODO: Terminar POST, PUT, DELETE partidas
-
+    /**
+     * @return Todas las partidas
+     */
     @GetMapping("/partidas")
     public List<Partida> getAllPartidas() {
         List<Partida> allPartidas = partidaRepositorio.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(allPartidas).getBody();
     }
 
+    /**
+     * @param partida json con los datos de la partida a insertar
+     * @return Inserta la partida
+     */
     @PostMapping("/partida")
     public ResponseEntity<Partida> postPartida(@Valid @RequestBody Partida partida) {
         return ResponseEntity.status(HttpStatus.CREATED).body(partidaRepositorio.save(partida));
     }
 
+    /**
+     * @param id Id de la partida a modificar
+     * @param partida json con los datos de la partida a modificar
+     * @return Modifica la partida
+     */
     @PutMapping("/partida/{id}")
     public Partida updatePartida(@PathVariable Long id, @Valid @RequestBody Partida partida) {
         return partidaRepositorio.findById(id)
@@ -56,6 +59,10 @@ public class ControladorPartida {
                 .orElseThrow(() ->  new PartidaNotFound(id));
     }
 
+    /**
+     * @param id Id de la partida a eliminar
+     * @return Elimina la partida
+     */
     @DeleteMapping("/partida/{id}")
     public ResponseEntity<?> deletePartida(@PathVariable Long id) {
         return partidaRepositorio.findById(id)
